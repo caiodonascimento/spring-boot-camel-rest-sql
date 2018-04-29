@@ -15,6 +15,7 @@
  */
 package io.fabric8.quickstarts.camel;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.servlet.CamelHttpTransportServlet;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -57,42 +58,73 @@ public class Application extends SpringBootServletInitializer {
                 .bindingMode(RestBindingMode.json);
 
             rest("/books").description("Books REST service")
-                .get("/").description("The list of all the books")
-                    .route().routeId("books-api")
-                    .to("sql:select distinct description from orders?" +
-                        "dataSource=dataSource&" +
-                        "outputClass=io.fabric8.quickstarts.camel.Book")
+                .get().description("List all of registered books")
+                    .produces("application/json")
+                    .route().routeId("all-books-api")
+                    .to("direct:get-books")
                     .endRest()
-                .get("order/{id}").description("Details of an order by id")
-                    .route().routeId("order-api")
-                    .to("sql:select * from orders where id = :#${header.id}?" +
-                        "dataSource=dataSource&outputType=SelectOne&" +
-                        "outputClass=io.fabric8.quickstarts.camel.Order");
-        }
-    }
+                .get("/{id}").description("Details of a book by id")
+                    .produces("application/json")
+                    .route().routeId("one-book-api")
+                    .to("direct:get-book")
+                    .endRest()
+                .post().description("Insert the data of a book")
+                    .type(Book.class).consumes("application/json").produces("application/json")
+                    .route().routeId("save-book-api")
+                    .to("direct:post-book")
+                    .endRest()
+                .put("/{id}").description("Update the data of a book by id")
+                    .type(Book.class).consumes("application/json").produces("application/json")
+                    .route().routeId("update-book-api")
+                    .to("direct:put-book")
+                    .endRest();
+            
+            from("direct:get-books")
+                .to("sql:select * from books?" +
+                    "dataSource=dataSource&outputClass=io.fabric8.quickstarts.camel.Book");
+            
+            from("direct:get-book")
+                .log("Get book with ID ${header.id}")
+                .choice().when(simple("${header.id} regex '^\\d+$'"))
+                    .to("sql:select * from books where id = :#${header.id}?" +
+                        "dataSource=dataSource&outputClass=io.fabric8.quickstarts.camel.Book")
+                    .choice().when(simple("${body.isEmpty()}"))
+                        .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(404))
+                        .setHeader(Exchange.HTTP_RESPONSE_TEXT, constant("Book not registered."))
+                    .otherwise()
+                        .setBody(simple("${body.get(0)}"))
+                    .endChoice()
+                .otherwise()
+                    .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
+                    .setHeader(Exchange.HTTP_RESPONSE_TEXT, constant("ID of the book is necessary, it's need be numeric."))
+                .endChoice();
 
-    @Component
-    class Backend extends RouteBuilder {
-
-        @Override
-        public void configure() {
-            // A first route generates some orders and queue them in DB
-            from("timer:new-order?delay=1s&period={{quickstart.generateOrderPeriod:2s}}")
-                .routeId("generate-order")
-                .bean("orderService", "generateOrder")
-                .to("sql:insert into orders (id, item, amount, description, processed) values " +
-                    "(:#${body.id} , :#${body.item}, :#${body.amount}, :#${body.description}, false)?" +
-                    "dataSource=dataSource")
-                .log("Inserted new order ${body.id}");
-
-            // A second route polls the DB for new orders and processes them
-            from("sql:select * from orders where processed = false?" +
-                "consumer.onConsume=update orders set processed = true where id = :#id&" +
-                "consumer.delay={{quickstart.processOrderPeriod:5s}}&" +
-                "dataSource=dataSource")
-                .routeId("process-order")
-                .bean("orderService", "rowToOrder")
-                .log("Processed order #id ${body.id} with ${body.amount} copies of the «${body.description}» book");
+            from("direct:post-book")
+                .choice().when(simple("${body} == null"))
+                    .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
+                    .setHeader(Exchange.HTTP_RESPONSE_TEXT, constant("Request format is incorrect, ask backend administrator to give book data format."))        
+                .otherwise()
+                    .to("sql:insert into books (id, code, description) values " +
+                        "(:#${body.id} , :#${body.code}, :#${body.description})?" +
+                        "dataSource=dataSource")
+                    .log("Inserted new book ${body.toString()}")
+                .endChoice();
+            
+            from("direct:put-book")
+                .log("Will update the book with ID ${header.id}")
+                .choice().when(simple("${header.id} regex '^\\d+$'"))
+                    .choice().when(simple("${body} != null"))
+                        .log("${body.toString()}")
+                        .to("sql:update books set code = :#${body.code}, description = :#${body.description} where id = :#${header.id}?" +
+                            "dataSource=dataSource")
+                    .otherwise()
+                        .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
+                        .setHeader(Exchange.HTTP_RESPONSE_TEXT, constant("Request format is incorrect, ask backend administrator to give book data format."))        
+                    .endChoice()
+                .otherwise()
+                    .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
+                    .setHeader(Exchange.HTTP_RESPONSE_TEXT, constant("ID of the book is necessary, it's need be numeric."))
+                .endChoice();
         }
     }
 }

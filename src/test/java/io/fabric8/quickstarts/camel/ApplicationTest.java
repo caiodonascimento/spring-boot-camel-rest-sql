@@ -13,17 +13,21 @@
  * implied.  See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 package io.fabric8.quickstarts.camel;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.NotifyBuilder;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,42 +40,52 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ApplicationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private CamelContext camelContext;
+    @Test
+    public void firstBookTest() {
+        HttpEntity<Book> entity = new HttpEntity<Book>(new Book(1, "1234567890", "Test book insert"));
+        ResponseEntity<Book> bookResponse = restTemplate.exchange("/camel-rest-sql/books",
+            HttpMethod.POST, entity, Book.class);
+        assertThat(bookResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Book book = bookResponse.getBody();
+        assertThat(book.getId()).isEqualTo(1);
+        assertThat(book.getCode()).isEqualTo("1234567890");
+        assertThat(book.getDescription()).isEqualTo("Test book insert");
+    }
 
     @Test
-    public void newOrderTest() {
-        // Wait enough time until the first order gets inserted and processed
-        NotifyBuilder notify = new NotifyBuilder(camelContext)
-            .fromRoute("generate-order")
-            .whenDone(2)
-            .and()
-            .fromRoute("process-order")
-            .whenDone(1)
-            .create();
-        assertThat(notify.matches(10, TimeUnit.SECONDS)).isTrue();
-
-        // Then call the REST API
-        ResponseEntity<Order> orderResponse = restTemplate.getForEntity("/camel-rest-sql/books/order/1", Order.class);
-        assertThat(orderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Order order = orderResponse.getBody();
-        assertThat(order.getId()).isEqualTo(1);
-        assertThat(order.getAmount()).isBetween(1, 10);
-        assertThat(order.getItem()).isIn("Camel", "ActiveMQ");
-        assertThat(order.getDescription()).isIn("Camel in Action", "ActiveMQ in Action");
-        assertThat(order.isProcessed()).isTrue();
+    public void secondBooksTests() {
+        ResponseEntity<Book> bookResponse = restTemplate.getForEntity("/camel-rest-sql/books/1", Book.class);
+        assertThat(bookResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Book book = bookResponse.getBody();
+        assertThat(book.getId()).isEqualTo(1);
+        assertThat(book.getCode()).isEqualTo("1234567890");
+        assertThat(book.getDescription()).isEqualTo("Test book insert");
 
         ResponseEntity<List<Book>> booksResponse = restTemplate.exchange("/camel-rest-sql/books",
             HttpMethod.GET, null, new ParameterizedTypeReference<List<Book>>(){});
         assertThat(booksResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<Book> books = booksResponse.getBody();
-        assertThat(books).hasSize(2);
-        assertThat(books.get(0).getDescription()).isIn("ActiveMQ in Action");
-        assertThat(books.get(1).getDescription()).isIn("Camel in Action");
+        assertThat(books).hasSize(1);
+        assertThat(books.get(0).getId()).isEqualTo(1);
+        assertThat(books.get(0).getCode()).isEqualTo("1234567890");
+        assertThat(books.get(0).getDescription()).isEqualTo("Test book insert");
+    }
+
+    @Test
+    public void thirdBookTest() {
+        HttpEntity<Book> entity = new HttpEntity<Book>(new Book(1, "1234567890", "Test book updated"));
+        ResponseEntity<Book> bookResponse = restTemplate.exchange("/camel-rest-sql/books/1",
+            HttpMethod.PUT, entity, Book.class);
+        assertThat(bookResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Book book = bookResponse.getBody();
+        assertThat(book.getId()).isEqualTo(1);
+        assertThat(book.getCode()).isEqualTo("1234567890");
+        assertThat(book.getDescription()).isEqualTo("Test book updated");
     }
 }

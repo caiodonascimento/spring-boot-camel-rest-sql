@@ -1,0 +1,564 @@
+{
+	"id": "a3bb6efa-ef7a-3b6f-82f4-6f9059709da4",
+	"name": "Spring-Spring Boot - CRUD Camel REST / MySQL",
+	"description": "Spring Boot CRUD Camel REST route connecting to a MySQL database",
+	"order": [
+		"db9535e9-19a2-687d-4759-fbe73573d9a7",
+		"519c8756-1d6e-03e9-40fa-ad847118b145",
+		"ab1afbc1-be44-5b63-c248-37796c8bc6af",
+		"3019a3b3-a52f-e61a-82f1-52640bd8613d"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1524845489632,
+	"owner": "542979",
+	"public": false,
+	"requests": [
+		{
+			"id": "3019a3b3-a52f-e61a-82f1-52640bd8613d",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/camel-rest-sql/books/1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1524845813959,
+			"name": "Update a book by id",
+			"description": "Update the data of a book by id",
+			"collectionId": "a3bb6efa-ef7a-3b6f-82f4-6f9059709da4",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK",
+						"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+					},
+					"time": 55,
+					"headers": [
+						{
+							"name": "accept",
+							"key": "accept",
+							"value": "*/*",
+							"description": "Custom header"
+						},
+						{
+							"name": "accept-encoding",
+							"key": "accept-encoding",
+							"value": "gzip, deflate, br",
+							"description": "Custom header"
+						},
+						{
+							"name": "accept-language",
+							"key": "accept-language",
+							"value": "es-ES,es;q=0.9,en;q=0.8",
+							"description": "Custom header"
+						},
+						{
+							"name": "breadcrumbid",
+							"key": "breadcrumbid",
+							"value": "ID-workstation-38685-1524845288757-0-6",
+							"description": "Custom header"
+						},
+						{
+							"name": "connection",
+							"key": "connection",
+							"value": "keep-alive",
+							"description": "Options that are desired for the connection"
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Fri, 27 Apr 2018 16:08:19 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "id",
+							"key": "id",
+							"value": "1",
+							"description": "Custom header"
+						},
+						{
+							"name": "origin",
+							"key": "origin",
+							"value": "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+							"description": "Custom header"
+						},
+						{
+							"name": "postman-token",
+							"key": "postman-token",
+							"value": "b26468fe-cf4e-e2c3-135d-a786f22d5ef4",
+							"description": "Custom header"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"name": "user-agent",
+							"key": "user-agent",
+							"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36",
+							"description": "Custom header"
+						},
+						{
+							"name": "x-application-context",
+							"key": "x-application-context",
+							"value": "application:dev",
+							"description": "Custom header"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":0,\"code\":\"123456789\",\"description\":\"Test with update\"}",
+					"language": "json",
+					"rawDataType": "text",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"name": "Update a book by id",
+					"id": "6e8fdc29-0d26-83f7-ca11-fa5cd0437bee",
+					"request": {
+						"url": "http://localhost:8080/camel-rest-sql/books/1",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"code\": \"123456789\",\n\t\"description\": \"Test with update\"\n}",
+						"method": "PUT",
+						"dataMode": "raw"
+					}
+				}
+			]
+		},
+		{
+			"id": "519c8756-1d6e-03e9-40fa-ad847118b145",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/camel-rest-sql/books/1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1524845776860,
+			"name": "Get book by id",
+			"description": "Details of a book by id",
+			"collectionId": "a3bb6efa-ef7a-3b6f-82f4-6f9059709da4",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK",
+						"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+					},
+					"time": 84,
+					"headers": [
+						{
+							"name": "accept",
+							"key": "accept",
+							"value": "*/*",
+							"description": "Custom header"
+						},
+						{
+							"name": "accept-encoding",
+							"key": "accept-encoding",
+							"value": "gzip, deflate, br",
+							"description": "Custom header"
+						},
+						{
+							"name": "accept-language",
+							"key": "accept-language",
+							"value": "es-ES,es;q=0.9,en;q=0.8",
+							"description": "Custom header"
+						},
+						{
+							"name": "breadcrumbid",
+							"key": "breadcrumbid",
+							"value": "ID-workstation-40537-1524843869649-0-12",
+							"description": "Custom header"
+						},
+						{
+							"name": "connection",
+							"key": "connection",
+							"value": "keep-alive",
+							"description": "Options that are desired for the connection"
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Fri, 27 Apr 2018 15:45:34 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "id",
+							"key": "id",
+							"value": "1",
+							"description": "Custom header"
+						},
+						{
+							"name": "postman-token",
+							"key": "postman-token",
+							"value": "c1ed12b6-e468-2e86-a78c-55e4d8cb0d2a",
+							"description": "Custom header"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"name": "user-agent",
+							"key": "user-agent",
+							"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36",
+							"description": "Custom header"
+						},
+						{
+							"name": "x-application-context",
+							"key": "x-application-context",
+							"value": "application:dev",
+							"description": "Custom header"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":1,\"code\":\"123456789\",\"description\":\"Test\"}",
+					"language": "json",
+					"rawDataType": "text",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"name": "Get book by id",
+					"id": "29fb04ba-20c1-bbe1-6d89-2d933678d102",
+					"request": {
+						"url": "http://localhost:8080/camel-rest-sql/books/1",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [],
+						"headers": "",
+						"data": null,
+						"method": "GET",
+						"dataMode": "params"
+					}
+				}
+			]
+		},
+		{
+			"id": "ab1afbc1-be44-5b63-c248-37796c8bc6af",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/camel-rest-sql/books",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1524845777702,
+			"name": "Save a book",
+			"description": "Insert the data of a book",
+			"collectionId": "a3bb6efa-ef7a-3b6f-82f4-6f9059709da4",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK",
+						"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+					},
+					"time": 267,
+					"headers": [
+						{
+							"name": "accept",
+							"key": "accept",
+							"value": "*/*",
+							"description": "Custom header"
+						},
+						{
+							"name": "accept-encoding",
+							"key": "accept-encoding",
+							"value": "gzip, deflate, br",
+							"description": "Custom header"
+						},
+						{
+							"name": "accept-language",
+							"key": "accept-language",
+							"value": "es-ES,es;q=0.9,en;q=0.8",
+							"description": "Custom header"
+						},
+						{
+							"name": "breadcrumbid",
+							"key": "breadcrumbid",
+							"value": "ID-workstation-38685-1524845288757-0-1",
+							"description": "Custom header"
+						},
+						{
+							"name": "connection",
+							"key": "connection",
+							"value": "keep-alive",
+							"description": "Options that are desired for the connection"
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Fri, 27 Apr 2018 16:08:16 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "origin",
+							"key": "origin",
+							"value": "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+							"description": "Custom header"
+						},
+						{
+							"name": "postman-token",
+							"key": "postman-token",
+							"value": "47ac1d00-57e0-05b3-aebc-9e0a7cdd96d0",
+							"description": "Custom header"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"name": "user-agent",
+							"key": "user-agent",
+							"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36",
+							"description": "Custom header"
+						},
+						{
+							"name": "x-application-context",
+							"key": "x-application-context",
+							"value": "application:dev",
+							"description": "Custom header"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":1,\"code\":\"123456789\",\"description\":\"Test\"}",
+					"language": "json",
+					"rawDataType": "text",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"name": "Save a book",
+					"id": "2bc96fcb-a0ce-b439-3ef8-6741960f8e82",
+					"request": {
+						"url": "http://localhost:8080/camel-rest-sql/books",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"id\": 1,\n\t\"code\": \"123456789\",\n\t\"description\": \"Test\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			]
+		},
+		{
+			"id": "db9535e9-19a2-687d-4759-fbe73573d9a7",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/camel-rest-sql/books",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1524845778331,
+			"name": "Get All Books",
+			"description": "List all of the registered books",
+			"collectionId": "a3bb6efa-ef7a-3b6f-82f4-6f9059709da4",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK",
+						"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+					},
+					"time": 43,
+					"headers": [
+						{
+							"name": "accept",
+							"key": "accept",
+							"value": "*/*",
+							"description": "Custom header"
+						},
+						{
+							"name": "accept-encoding",
+							"key": "accept-encoding",
+							"value": "gzip, deflate, br",
+							"description": "Custom header"
+						},
+						{
+							"name": "accept-language",
+							"key": "accept-language",
+							"value": "es-ES,es;q=0.9,en;q=0.8",
+							"description": "Custom header"
+						},
+						{
+							"name": "breadcrumbid",
+							"key": "breadcrumbid",
+							"value": "ID-workstation-38685-1524845288757-0-11",
+							"description": "Custom header"
+						},
+						{
+							"name": "connection",
+							"key": "connection",
+							"value": "keep-alive",
+							"description": "Options that are desired for the connection"
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Fri, 27 Apr 2018 16:08:23 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "postman-token",
+							"key": "postman-token",
+							"value": "358b8718-95bb-f8ee-24ad-b0b47db7d67b",
+							"description": "Custom header"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"name": "user-agent",
+							"key": "user-agent",
+							"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36",
+							"description": "Custom header"
+						},
+						{
+							"name": "x-application-context",
+							"key": "x-application-context",
+							"value": "application:dev",
+							"description": "Custom header"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "[{\"id\":1,\"code\":\"123456789\",\"description\":\"Test with update\"}]",
+					"language": "json",
+					"rawDataType": "text",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"name": "Get All Books",
+					"id": "c3cab7f2-5025-e050-a7ba-d465f93c8058",
+					"request": {
+						"url": "http://localhost:8080/camel-rest-sql/books",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [],
+						"headers": "",
+						"data": null,
+						"method": "GET",
+						"dataMode": "params"
+					}
+				}
+			]
+		}
+	]
+}

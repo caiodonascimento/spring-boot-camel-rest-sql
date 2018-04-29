@@ -1,9 +1,7 @@
-drop table if exists orders;
+drop table if exists books;
 
-create table orders (
+create table books (
   id integer primary key,
-  item varchar(10),
-  amount integer,
-  description varchar(30),
-  processed boolean
+  code varchar(50),
+  description varchar(30)
 );
